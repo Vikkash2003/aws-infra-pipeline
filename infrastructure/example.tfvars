@@ -1,0 +1,6 @@
+aws_region        = "ap-south-1"
+project_name      = "aws-infra-pipeline"
+environment       = "dev"
+ec2_instance_type = "t2.micro"
+my_ip             = "YOUR_PUBLIC_IP_HERE/32"
+alert_email       = "YOUR_EMAIL_HERE"

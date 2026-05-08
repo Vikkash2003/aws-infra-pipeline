@@ -11,7 +11,7 @@ variable "project_name" {
 }
 
 variable "environment" {
-  description = "Environment name — dev, staging, or prod"
+  description = "Deployment environment name — dev, staging, or prod"
   type        = string
   default     = "dev"
 }

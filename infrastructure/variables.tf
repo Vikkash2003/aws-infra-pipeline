@@ -17,9 +17,9 @@ variable "environment" {
 }
 
 variable "ec2_instance_type" {
-  description = "EC2 instance type — t2.micro is free tier eligible"
+  description = "EC2 instance type — t3.micro is free tier eligible"
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
 }
 
 variable "my_ip" {

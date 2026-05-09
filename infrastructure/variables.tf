@@ -11,15 +11,22 @@ variable "project_name" {
 }
 
 variable "environment" {
-  description = "Environment name — dev, staging, or prod"
+  description = "Deployment environment name — dev, staging, or prod"
   type        = string
   default     = "dev"
 }
 
 variable "ec2_instance_type" {
-  description = "EC2 instance type — t2.micro is free tier eligible"
+  description = "EC2 instance type — t3.micro is free tier eligible"
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
+}
+
+variable "ec2_public_key" {
+  description = "Optional public key contents for EC2 SSH access"
+  type        = string
+  default     = ""
+  sensitive   = true
 }
 
 variable "my_ip" {

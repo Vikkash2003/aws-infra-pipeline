@@ -3,8 +3,9 @@
 # Uploads your public key to AWS so you can SSH into EC2
 # -----------------------------------------------------------
 resource "aws_key_pair" "ec2_key" {
+  count      = var.ec2_public_key == "" ? 0 : 1
   key_name   = "${var.project_name}-${var.environment}-key"
-  public_key = file("~/.ssh/aws-infra-key.pub")
+  public_key = var.ec2_public_key
 
   tags = {
     Name        = "${var.project_name}-${var.environment}-key"
@@ -41,7 +42,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "app_server" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.ec2_instance_type
-  key_name               = aws_key_pair.ec2_key.key_name
+  key_name               = var.ec2_public_key == "" ? null : aws_key_pair.ec2_key[0].key_name
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 

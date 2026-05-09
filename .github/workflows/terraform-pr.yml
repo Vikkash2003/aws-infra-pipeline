@@ -37,6 +37,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
+      - name: Set Terraform variables
+        run: |
+          echo "TF_VAR_ec2_public_key=${{ secrets.EC2_PUBLIC_KEY }}" >> $GITHUB_ENV
+          echo "TF_VAR_my_ip=${{ secrets.MY_IP }}" >> $GITHUB_ENV
+          echo "TF_VAR_alert_email=${{ secrets.ALERT_EMAIL }}" >> $GITHUB_ENV
+
       - name: Terraform Init
         id: init
         run: terraform init
@@ -52,7 +58,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -out=tfplan
+        run: terraform plan -no-color
         continue-on-error: false
 
       - name: Post Plan as PR Comment
@@ -64,14 +70,6 @@ jobs:
             const output = `#### Terraform Format Check 🖌 \`${{ steps.fmt.outcome }}\`
             #### Terraform Validation 🤖 \`${{ steps.validate.outcome }}\`
             #### Terraform Plan 📖 \`${{ steps.plan.outcome }}\`
-
-            <details><summary>Show Plan</summary>
-
-            \`\`\`terraform
-            ${{ steps.plan.outputs.stdout }}
-            \`\`\`
-
-            </details>
 
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 

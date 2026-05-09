@@ -36,6 +36,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
+      - name: Set Terraform variables
+        run: |
+          echo "TF_VAR_ec2_public_key=${{ secrets.EC2_PUBLIC_KEY }}" >> $GITHUB_ENV
+          echo "TF_VAR_my_ip=${{ secrets.MY_IP }}" >> $GITHUB_ENV
+          echo "TF_VAR_alert_email=${{ secrets.ALERT_EMAIL }}" >> $GITHUB_ENV
+
       - name: Terraform Init
         run: terraform init
 

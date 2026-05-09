@@ -22,6 +22,13 @@ variable "ec2_instance_type" {
   default     = "t3.micro"
 }
 
+variable "ec2_public_key" {
+  description = "Optional public key contents for EC2 SSH access"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "my_ip" {
   description = "Your public IP address with /32 suffix for SSH access. Find it at checkip.amazonaws.com"
   type        = string
